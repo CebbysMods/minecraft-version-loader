@@ -8,17 +8,12 @@
 		"CebbyS"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/CebbysMods/minecraft-version-loader",
+		"sources": "https://github.com/CebbysMods/minecraft-version-loader"
 	},
-	"license": "CC0-1.0",
+	"license": "Apache License 2.0",
 	"icon": "assets/mvl/icon.png",
 	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"lv.cebbys.mcmods.mvl.Mvl"
-		]
-	},
 	"depends": {
 		"fabricloader": ">=0.10.0",
 		"minecraft": ">=1.16",

@@ -4,19 +4,19 @@ import lombok.Data;
 
 @Data
 public class MinecraftVersion {
-    private final int release;
     private final int major;
     private final int minor;
+    private final int patch;
     private final String versionString;
 
-    public MinecraftVersion(int release, int major, int minor) {
-        this.release = release;
+    public MinecraftVersion(int major, int minor, int patch) {
         this.major = major;
         this.minor = minor;
-        if (minor == 0) {
-            versionString = String.format("%d.%d", release, major);
+        this.patch = patch;
+        if (patch == 0) {
+            versionString = String.format("%d.%d", major, minor);
         } else {
-            versionString = String.format("%d.%d.%d", release, major, minor);
+            versionString = String.format("%d.%d.%d", major, minor, patch);
         }
     }
 
