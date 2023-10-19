@@ -1,41 +1,23 @@
 plugins {
 	id 'fabric-loom' version '1.2-SNAPSHOT'
 	id 'maven-publish'
-	id 'signing'
 }
 
-var snapshot = false;
-if (snapshot) {
-	version = project.mod_version + "-SNAPSHOT"
-} else {
-	version = project.mod_version
-}
-group = project.maven_group
-
-base {
-	archivesName = project.archives_base_name
-}
+version = project.mod_version
+group = project.mod_group
+archivesBaseName = project.mod_name
 
 repositories {
 	mavenCentral()
+	mavenLocal()
 }
 
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings loom.officialMojangMappings()
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
 	compileOnly 'org.projectlombok:lombok:1.18.28'
 	annotationProcessor 'org.projectlombok:lombok:1.18.28'
-}
-
-processResources {
-	inputs.property "version", project.version
-
-	filesMatching("fabric.mod.json") {
-		expand "version": project.version
-	}
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -55,57 +37,10 @@ java {
 	targetCompatibility = JavaVersion.VERSION_17
 }
 
-signing {
-	sign configurations.archives
-}
-
-// configure the maven publication
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
 			from components.java
-			pom {
-				name = 'Minecraft Version Loader'
-				description = 'This is a utility mod that provides universal API to retrieve Minecraft version'
-				url = 'https://github.com/CebbysMods/minecraft-version-loader'
-				licenses {
-					license {
-						name = 'Apache License 2.0'
-					}
-				}
-				developers {
-					developer {
-						id = 'CebbyS'
-						name = 'Janis Valentinovics'
-						email = 'cebbys.dev@gmail.com'
-					}
-				}
-				scm {
-					connection = 'scm:git:https://github.com/CebbysMods/minecraft-version-loader.git'
-					developerConnection = 'scm:git:https://github.com/CebbysMods/minecraft-version-loader.git'
-					url = 'https://github.com/CebbysMods/minecraft-version-loader'
-				}
-			}
-		}
-	}
-
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
-		maven {
-			name = "MavenCentral"
-			credentials {
-				username = "$maven_central_username"
-				password = "$maven_central_password"
-			}
-			if (snapshot) {
-				url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
-			} else {
-				url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
-			}
 		}
 	}
 }

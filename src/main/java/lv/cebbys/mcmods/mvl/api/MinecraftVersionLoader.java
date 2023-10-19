@@ -6,9 +6,6 @@ import lv.cebbys.mcmods.mvl.dto.MinecraftVersion;
 import lv.cebbys.mcmods.mvl.exception.VersionLocationException;
 import lv.cebbys.mcmods.mvl.loader.DetectedVersionClassVersionLoader;
 import lv.cebbys.mcmods.mvl.loader.VersionLoader;
-import net.minecraft.DetectedVersion;
-
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -60,33 +57,6 @@ public class MinecraftVersionLoader {
     }
 
     private static void registerVersionLoaders(Registry<VersionLoader> registry) {
-        var loader = (VersionLoader) () -> {
-            try {
-                var version = DetectedVersion.tryDetectVersion();
-                var versionClazz = version.getClass();
-
-                log.info("DetectedVersion: {}", DetectedVersion.class);
-
-                for (var method : versionClazz.getDeclaredMethods()) {
-                    if (Modifier.isStatic(method.getModifiers())) {
-                        if (method.getParameterCount() != 0) {
-                            continue;
-                        }
-                        log.info("static:: {}: {}", method.getName(), method.invoke(null));
-                    } else {
-                        if (!method.getReturnType().equals(String.class) || method.getParameterCount() != 0) {
-                            continue;
-                        }
-                        log.info("normal:: {}: {}", method.getName(), method.invoke(version));
-                    }
-                }
-            } catch (Exception ignored) {
-            }
-            return null;
-        };
-
-        registry.register(loader);
-
         for (var config : DETECTED_VERSION_LOADER_CONFIGS) {
             registry.register(new DetectedVersionClassVersionLoader(config));
         }

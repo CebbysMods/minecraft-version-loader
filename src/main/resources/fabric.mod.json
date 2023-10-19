@@ -1,11 +1,11 @@
 {
 	"schemaVersion": 1,
 	"id": "mvl",
-	"version": "${version}",
+	"version": "1.0.0",
 	"name": "Minecraft Version Loader",
 	"description": "This is a utility mod that provides universal API to get Minecraft version",
 	"authors": [
-		"CebbyS"
+		"<cebbys.dev@gmail.com> CebbyS"
 	],
 	"contact": {
 		"homepage": "https://github.com/CebbysMods/minecraft-version-loader",
